@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Image-Recognition.iml" filepath="$PROJECT_DIR$/.idea/Image-Recognition.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Image-Classification/.idea/Image-Recognition.iml" filepath="$PROJECT_DIR$/../Image-Classification/.idea/Image-Recognition.iml" />
     </modules>
   </component>
 </project>
