@@ -32,14 +32,28 @@ refresh_dir(images_path, "\Other-Validate")
 refresh_dir(images_path, "\Other-Test")
 
 # bunny, 611
+bunny_train, bunny_test, bunny_validate = do_splits("\Bunnies-Base")
 # human, 100
+human_train, human_test, human_validate = do_splits("\Other-Base\\Human")
 # nature background, 100
+nature_train, nature_test, nature_validate = do_splits("\Other-Base\\Nature-Background")
 # text, 75
+text_train, text_test, text_validate = do_splits("\Other-Base\\Text")
 # dogs, 50
+dogs_train, dogs_text, dogs_validate = do_splits("\Other-Base\\Dogs")
 # cats, 50
+cats_train, cats_text, cats_validate = do_splits("\Other-Base\\Cats")
 # hamsters, 50
+hamsters_train, hamsters_text, hamsters_validate = do_splits("\Other-Base\\Hamsters")
 # suggestively sexual, 50
+ss_train, ss_text, ss_validate = do_splits("\Other-Base\\Suggestively-Sexual")
 # suggestively violent, 50
+sv_train, sv_text, sv_validate = do_splits("\Other-Base\\Suggestively-Violent")
 # abstract background, 50
+ab_train, ab_text, ab_validate = do_splits("\Other-Base\\Abstract-Background")
 # empty cages, 25
+ec_train, ec_text, ec_validate = do_splits("\Other-Base\\Empty-Cages")
 # bunny drawings 11
+bd_train, bd_text, bd_validate = do_splits("\Other-Base\\Bunny-Drawings")
+
+print("test")
