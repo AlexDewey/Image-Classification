@@ -25,16 +25,27 @@ def do_splits(src, directory_given):
     val_FileNames = [src + directory_given + "\\" + name for name in validate.tolist()]
     test_FileNames = [src + directory_given + "\\" + name for name in test.tolist()]
 
-    # Copy-pasting images
-    for name in train_FileNames:
-        shutil.copy(name, src + '/train//' + cls)
+    if directory_given == "\Bunnies-Base":
+        # Copy-pasting images
+        for name in train_FileNames:
+            shutil.copy(name, src + '\Bunnies-Train')
 
-    for name in val_FileNames:
-        shutil.copy(name, src + '/val//' + cls)
+        for name in val_FileNames:
+            shutil.copy(name, src + '\Bunnies-Validate')
 
-    for name in test_FileNames:
-        shutil.copy(name, src + '/test//' + cls)
-    return [train_FileNames, test_FileNames, val_FileNames]
+        for name in test_FileNames:
+            shutil.copy(name, src + '\Bunnies-Test')
+    else:
+        # Copy-pasting images
+        for name in train_FileNames:
+            shutil.copy(name, src + '\Other-Train')
+
+        for name in val_FileNames:
+            shutil.copy(name, src + '\Other-Validate')
+
+        for name in test_FileNames:
+            shutil.copy(name, src + '\Other-Test')
+
 
 
 refresh_dir(images_path, "\Bunnies-Train")
