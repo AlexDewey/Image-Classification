@@ -15,7 +15,7 @@ def refresh_dir(path, name):
         os.mkdir(path + name)
 
 
-def do_splits(src, directory_given):
+def do_splits(src, directory_given, class_idx):
     # 70, 15, 15 split
     allFileNames = os.listdir(images_path + directory_given)
     np.random.shuffle(allFileNames)
@@ -27,25 +27,42 @@ def do_splits(src, directory_given):
 
     if directory_given == "\Bunnies-Base":
         # Copy-pasting images
+        idx = 0
         for name in train_FileNames:
             shutil.copy(name, src + '\Bunnies-Train')
+            os.rename(src + '\Bunnies-Train', src + '\Bunnies-Train' + str(class_idx) + "-" + str(idx))
+            idx += 1
 
+        idx = 0
         for name in val_FileNames:
             shutil.copy(name, src + '\Bunnies-Validate')
+            os.rename(src + '\Bunnies-Validate', src + '\Bunnies-Validate' + str(class_idx) + '-' + str(idx))
+            idx += 1
 
+        idx = 0
         for name in test_FileNames:
             shutil.copy(name, src + '\Bunnies-Test')
+            os.rename(src + '\Bunnies-Test', src + '\Bunnies-Test' + str(class_idx) + '-' + str(idx))
+            idx += 1
     else:
         # Copy-pasting images
+        idx = 0
         for name in train_FileNames:
             shutil.copy(name, src + '\Other-Train')
+            os.rename(src + '\Other-Train', src + '\Other-Train' + str(class_idx) + '-' + str(idx))
+            idx += 1
 
+        idx = 0
         for name in val_FileNames:
             shutil.copy(name, src + '\Other-Validate')
+            os.rename(src + '\Other-Validate', src + '\Other-Validate' + str(class_idx) + '-' + str(idx))
+            idx += 1
 
+        idx = 0
         for name in test_FileNames:
             shutil.copy(name, src + '\Other-Test')
-
+            os.rename(src + '\Other-Test', src + '\Other-Test' + str(class_idx) + '-' + str(idx))
+            idx += 1
 
 
 refresh_dir(images_path, "\Bunnies-Train")
@@ -60,7 +77,8 @@ classes = ["\Bunnies-Base", "\Other-Base\\Human", "\Other-Base\\Nature-Backgroun
            "\Other-Base\\Suggestively-Violent", "\Other-Base\\Abstract-Background", "\Other-Base\\Empty-Cages",
            "\Other-Base\\Bunny-Drawings"]
 
+class_idx = 0
 for class_dir in classes:
-    do_splits(images_path, class_dir)
+    do_splits(images_path, class_dir, class_idx)
 
 print("test")
