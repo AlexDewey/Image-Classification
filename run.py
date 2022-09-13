@@ -32,20 +32,20 @@ def do_splits(src, directory_given, class_idx):
     else:
         directories = ["\Other-Train", "\Other-Validate", "\Other-Test"]
 
-    for directory in directories:
-        for split in splits:
-            idx = 0
-            for name in split:
-                failed_naming = True
-                while failed_naming:
-                    try:
-                        shutil.copy(name, src + directory)
-                        os.rename(src + directory + '\\' + name.rsplit('\\', 1)[-1],
-                                  src + directory + '\\' + str(class_idx) + "-" + str(idx) + name.rsplit('\\', 1)[-1])
-                        failed_naming = False
-                    except:
-                        idx += 1
-                idx += 1
+    for split_index, directory in enumerate(directories):
+        split = splits[split_index]
+        idx = 0
+        for name in split:
+            failed_naming = True
+            while failed_naming:
+                try:
+                    shutil.copy(name, src + directory)
+                    os.rename(src + directory + '\\' + name.rsplit('\\', 1)[-1],
+                              src + directory + '\\' + str(class_idx) + "-" + str(idx) + name.rsplit('\\', 1)[-1])
+                    failed_naming = False
+                except:
+                    idx += 1
+            idx += 1
 
 
 refresh_dir(images_path, "\Bunnies-Train")
