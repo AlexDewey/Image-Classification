@@ -25,44 +25,27 @@ def do_splits(src, directory_given, class_idx):
     val_FileNames = [src + directory_given + "\\" + name for name in validate.tolist()]
     test_FileNames = [src + directory_given + "\\" + name for name in test.tolist()]
 
+    splits = [train_FileNames, val_FileNames, test_FileNames]
+
     if directory_given == "\Bunnies-Base":
-        # Copy-pasting images
-        idx = 0
-        for name in train_FileNames:
-            shutil.copy(name, src + '\Bunnies-Train')
-            os.rename(src + '\Bunnies-Train', src + '\Bunnies-Train' + str(class_idx) + "-" + str(idx))
-            idx += 1
-
-        idx = 0
-        for name in val_FileNames:
-            shutil.copy(name, src + '\Bunnies-Validate')
-            os.rename(src + '\Bunnies-Validate', src + '\Bunnies-Validate' + str(class_idx) + '-' + str(idx))
-            idx += 1
-
-        idx = 0
-        for name in test_FileNames:
-            shutil.copy(name, src + '\Bunnies-Test')
-            os.rename(src + '\Bunnies-Test', src + '\Bunnies-Test' + str(class_idx) + '-' + str(idx))
-            idx += 1
+        directories = ["\Bunnies-Train", "\Bunnies-Validate", "\Bunnies-Test"]
     else:
-        # Copy-pasting images
-        idx = 0
-        for name in train_FileNames:
-            shutil.copy(name, src + '\Other-Train')
-            os.rename(src + '\Other-Train', src + '\Other-Train' + str(class_idx) + '-' + str(idx))
-            idx += 1
+        directories = ["\Other-Train", "\Other-Validate", "\Other-Test"]
 
-        idx = 0
-        for name in val_FileNames:
-            shutil.copy(name, src + '\Other-Validate')
-            os.rename(src + '\Other-Validate', src + '\Other-Validate' + str(class_idx) + '-' + str(idx))
-            idx += 1
-
-        idx = 0
-        for name in test_FileNames:
-            shutil.copy(name, src + '\Other-Test')
-            os.rename(src + '\Other-Test', src + '\Other-Test' + str(class_idx) + '-' + str(idx))
-            idx += 1
+    for directory in directories:
+        for split in splits:
+            idx = 0
+            for name in split:
+                failed_naming = True
+                while failed_naming:
+                    try:
+                        shutil.copy(name, src + directory)
+                        os.rename(src + directory + '\\' + name.rsplit('\\', 1)[-1],
+                                  src + directory + '\\' + str(class_idx) + "-" + str(idx) + name.rsplit('\\', 1)[-1])
+                        failed_naming = False
+                    except:
+                        idx += 1
+                idx += 1
 
 
 refresh_dir(images_path, "\Bunnies-Train")
@@ -81,4 +64,34 @@ class_idx = 0
 for class_dir in classes:
     do_splits(images_path, class_dir, class_idx)
 
-print("test")
+print("done")
+
+
+
+
+
+
+
+
+
+
+# Code for renaming values in case there's another blunder handling data
+
+# values = ["Hamsters", "Human", "Nature-Background", "Suggestively-Sexual", "Suggestively-Violent", "Text"]
+#
+# for value in values:
+#     allFileNames = os.listdir(images_path + "\Other-Base\\" + value + "\\")
+#     for file_name in allFileNames:
+#         old_name = file_name
+#         for letter in range(len(file_name) - 1, 0, -1):
+#             print(file_name[letter])
+#             if file_name[letter] != 'g':
+#                 file_name = file_name[:-1]
+#                 print("popped")
+#             else:
+#                 print("found end!")
+#                 os.rename(images_path + "\Other-Base\\" + value + "\\" + old_name,
+#                           images_path + "\Other-Base\\" + value + "\\" + file_name)
+#                 break
+
+
