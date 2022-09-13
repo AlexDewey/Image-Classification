@@ -66,4 +66,28 @@ for class_dir in classes:
     do_splits(images_path, class_dir, class_idx)
     class_idx += 1
 
+bunny_test_len = len(os.listdir(images_path + "\Bunnies-Test"))
+other_test_len = len(os.listdir(images_path + "\Other-Test"))
+while bunny_test_len != other_test_len:
+    if bunny_test_len > other_test_len:
+        # put a test into bunny_train
+        shutil.move(images_path + "\Bunnies-Test\\" + os.listdir(images_path + "\Bunnies-Test")[0], images_path + "\Bunnies-Train\\" + os.listdir(images_path + "\Bunnies-Test")[0])
+    elif bunny_test_len < other_test_len:
+        # put a other into other_train
+        shutil.move(os.listdir(images_path + "\Other-Test\\" + images_path + "\Other-Test")[0], images_path + "\Other-Train\\")
+    bunny_test_len = len(os.listdir(images_path + "\Bunnies-Test"))
+    other_test_len = len(os.listdir(images_path + "\Other-Test"))
+
+bunny_train_len = len(os.listdir(images_path + "\Bunnies-Train"))
+other_train_len = len(os.listdir(images_path + "\Other-Train"))
+while bunny_train_len != other_train_len:
+    if bunny_train_len > other_train_len:
+        # put a train into bunny_validate
+        shutil.move(os.listdir(images_path + "\Bunnies-Train\\" + images_path + "\Bunnies-Train")[0], images_path + "\Bunnies-Validate\\")
+    elif bunny_train_len < other_train_len:
+        # put a other into other_validate
+        shutil.move(os.listdir(images_path + "\Other-Train\\" + images_path + "\Other-Train")[0], images_path + "\Other-Validate\\")
+    bunny_train_len = len(os.listdir(images_path + "\Bunnies-Train"))
+    other_train_len = len(os.listdir(images_path + "\Other-Train"))
+
 print("done")
