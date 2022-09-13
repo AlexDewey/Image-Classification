@@ -48,50 +48,22 @@ def do_splits(src, directory_given, class_idx):
             idx += 1
 
 
-refresh_dir(images_path, "\Bunnies-Train")
-refresh_dir(images_path, "\Bunnies-Validate")
-refresh_dir(images_path, "\Bunnies-Test")
-refresh_dir(images_path, "\Other-Train")
-refresh_dir(images_path, "\Other-Validate")
-refresh_dir(images_path, "\Other-Test")
+# ===================================
+# Refreshing directories
+refresh_directories = ["\Bunnies-Train", "\Bunnies-Validate", "\Bunnies-Test", "\Other-Train", "\Other-Validate",
+                       "\Other-Test"]
+for ref_dir in refresh_directories:
+    refresh_dir(images_path, ref_dir)
 
+# ===================================
+# Balancing and ordering classes
 classes = ["\Bunnies-Base", "\Other-Base\\Human", "\Other-Base\\Nature-Background", "\Other-Base\\Text",
            "\Other-Base\\Dogs", "\Other-Base\\Cats", "\Other-Base\\Hamsters", "\Other-Base\\Suggestively-Sexual",
            "\Other-Base\\Suggestively-Violent", "\Other-Base\\Abstract-Background", "\Other-Base\\Empty-Cages",
            "\Other-Base\\Bunny-Drawings"]
-
 class_idx = 0
 for class_dir in classes:
     do_splits(images_path, class_dir, class_idx)
+    class_idx += 1
 
 print("done")
-
-
-
-
-
-
-
-
-
-
-# Code for renaming values in case there's another blunder handling data
-
-# values = ["Hamsters", "Human", "Nature-Background", "Suggestively-Sexual", "Suggestively-Violent", "Text"]
-#
-# for value in values:
-#     allFileNames = os.listdir(images_path + "\Other-Base\\" + value + "\\")
-#     for file_name in allFileNames:
-#         old_name = file_name
-#         for letter in range(len(file_name) - 1, 0, -1):
-#             print(file_name[letter])
-#             if file_name[letter] != 'g':
-#                 file_name = file_name[:-1]
-#                 print("popped")
-#             else:
-#                 print("found end!")
-#                 os.rename(images_path + "\Other-Base\\" + value + "\\" + old_name,
-#                           images_path + "\Other-Base\\" + value + "\\" + file_name)
-#                 break
-
-
