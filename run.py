@@ -28,7 +28,7 @@ def do_splits(src, directory_given, class_idx):
         while failed_naming:
             try:
                 shutil.copy(name, src + directory)
-                os.rename(src + directory + "\\" + name.rsplit('||', 1)[-1],
+                os.rename(src + directory + "\\" + name.rsplit('\\', 1)[-1],
                           src + directory + '\\' + str(class_idx) + "-" + str(idx) + name.rsplit('\\', 1)[-1])
                 failed_naming = False
             except:
@@ -92,14 +92,26 @@ img_width = 180
 
 print(images_path + "\Bunnies-Train")
 
-bunny_train_dir = tf.keras.utils.image_dataset_from_directory(
-    images_path + "\Bunnies-Train",
+train_bunnies = tf.keras.utils.image_dataset_from_directory(
+    images_path + "\Bunnies-Base",
+    validation_split=0.2,
+    subset="training",
+    seed=321,
+    image_size=(img_height, img_width),
+    batch_size=batch_size
+)
+
+validation_bunnies = tf.keras.utils.image_dataset_from_directory(
+    images_path + "\Other-Usable",
+    validation_split=0.2,
+    subset="validation",
+    seed=321,
     image_size=(img_height, img_width),
     batch_size=batch_size
 )
 
 plt.figure(figsize=(10, 10))
-for images, labels in bunny_train_dir.take(1):
+for images, labels in train_bunnies.take(1):
     for i in range(9):
         ax = plt.subplot(3, 3, i + 1)
         plt.imshow(images[i].numpy().astype("uint8"))
