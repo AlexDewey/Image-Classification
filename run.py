@@ -4,6 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.models import Sequential
+
 images_path = os.getcwd()
 images_path = images_path + "\Images"
 
@@ -92,7 +96,7 @@ img_width = 180
 
 print(images_path + "\Bunnies-Train")
 
-train_bunnies = tf.keras.utils.image_dataset_from_directory(
+train_ds = tf.keras.utils.image_dataset_from_directory(
     images_path + "\Bunnies-Base",
     validation_split=0.2,
     subset="training",
@@ -101,7 +105,7 @@ train_bunnies = tf.keras.utils.image_dataset_from_directory(
     batch_size=batch_size
 )
 
-validation_bunnies = tf.keras.utils.image_dataset_from_directory(
+validation_ds = tf.keras.utils.image_dataset_from_directory(
     images_path + "\Other-Usable",
     validation_split=0.2,
     subset="validation",
@@ -111,13 +115,29 @@ validation_bunnies = tf.keras.utils.image_dataset_from_directory(
 )
 
 plt.figure(figsize=(10, 10))
-for images, labels in train_bunnies.take(1):
+for images, labels in train_ds.take(1):
     for i in range(9):
         ax = plt.subplot(3, 3, i + 1)
         plt.imshow(images[i].numpy().astype("uint8"))
         plt.title("bunnies :D")
         plt.axis("off")
 
+# todo: Test if images are correct ratio
+for image_batch, labels_batch in train_ds:
+    print(image_batch.shape)
+    print(labels.shape)
+    break
 
+AUTOTUNE = tf.data.AUTOTUNE
+
+train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
+validation_ds = validation_ds.cache().prefetch(buffer_size=AUTOTUNE)
+
+num_classes = len(classes_names)
+
+model = Sequential([
+    layers.Rescaling(1./255, input_shape=(img_height, img_width, 3)),
+
+])
 
 print("done")
